@@ -72,7 +72,7 @@
                             <li class="nav-item dropdown" dir="rtl">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ Auth::user()->name }}
-                                    <img class="user-image" src="{{ asset('/storage/'.auth()->user()->img) }}">
+                                    <img class="user-image" src="{{ asset(auth()->user()->img) }}">
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-right text-right" aria-labelledby="navbarDropdown">

@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
+use Illuminate\Support\Facades\File;
 class ProfileController extends Controller
 {
     public function index(){
@@ -19,15 +19,25 @@ class ProfileController extends Controller
             'password'=>['confirmed','min:8'],
             'img'=>['mimes:jpeg,jpg,png']
         ]);
+        $userId=auth()->id();
+        $user=User::findOrFail($userId);
         if(request()->has('password')){
             $data['password']=Hash::make(request('password'));   
         }
-        if(request()->hasFile('img')){
-            $path= request('img')->store('users');
-            $data['img']=$path;
+        // upload one image
+        if(request()->hasfile('img')) {  
+            $file=request()->file('img');
+            $name = uniqid().'.'.$file->getClientOriginalExtension();
+            $file->move(public_path('/images/users/'),$name);
+            //delete old logo
+            $n=explode("/images/users/",$user->img)[1];
+            if(File::exists(public_path().'/images/users/'.$n)) {
+                File::delete(public_path().'/images/users/'.$n);     
+            }
+            //
+            $data['img']=asset('/images/users/'.$name);
         }
-        $userId=auth()->id();
-        User::findOrFail($userId)->update($data);
+        $user->update($data);
         return back();
     }
 }
