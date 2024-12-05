@@ -29,7 +29,7 @@ class ProfileController extends Controller
             $file=request()->file('img');
             $name = uniqid().'.'.$file->getClientOriginalExtension();
             $file->move(public_path('/images/users/'),$name);
-            if($user->img){
+            if($user->img!="no img"){
             $n=explode("/images/users/",$user->img)[1];
                 if(File::exists(public_path().'/images/users/'.$n)) {
                     File::delete(public_path().'/images/users/'.$n);     
