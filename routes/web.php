@@ -5,12 +5,13 @@ use App\Http\Controllers\ProjectController;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\HomeController;
 
 Route::get('/',function(){
    return redirect('/project');
 });
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/home', [HomeController::class, 'index'])->middleware('auth')->name('home');
 
 Auth::routes();
 

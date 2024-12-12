@@ -40,7 +40,7 @@
                                        <a href="/project/{{ $pro->id }}">{{ $pro->title }}</a>
                              </h5>
                              <div class="card-text mt-4">
-                                      {{ Str::limit($pro->description, 150)  }}
+                                      {{ Str::limit($pro->description, 10)  }}
                              </div>
 
                        </div>
